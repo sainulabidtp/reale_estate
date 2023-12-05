@@ -1,0 +1,57 @@
+<!-- property_management/templates/property_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}{{ property.name }} Details{% endblock %}
+
+{% block content %}
+<h2 class="mt-4 mb-4"><center>{{ property.name }} Details</center></h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{ property.name }}</h3>
+            <p class="card-text"><strong>Address:</strong> {{ property.address }}</p>
+            <p class="card-text"><strong>Location:</strong> {{ property.location }}</p>
+            <p class="card-text"><strong>Features:</strong> {{ property.features }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+ {% if user.is_authenticated and user.is_staff %}
+              <a href="{% url 'add_unit' property.id  %}" class="btn btn-success btn-sm">Add Unit</a>
+
+              {% endif %}
+    <h3 class="mt-4 mb-3">Units</h3>
+    <div class="row">
+      {% for unit in units %}
+        <div class="col-md-4 mb-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ unit.unit_type }}</h5>
+              <p class="card-text">Rent Cost: {{ unit.rent_cost }}</p>
+              <a href="{% url 'unit_detail' property.id unit.id %}" class="btn btn-primary btn-sm">Details</a>
+               {% if user.is_authenticated and user.is_staff %}
+              <a href="{% url 'assign_tenant' property.id unit.id %}" class="btn btn-success btn-sm">Assign Tenant</a>
+
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+ {% if user.is_authenticated and user.is_staff %}
+
+    <h3 class="mt-4 mb-3">Tenants</h3>
+    <ul class="list-group">
+      {% for info in rental_info %}
+        <li class="list-group-item">
+          <a href="{% url 'tenant_profile' info.tenant.id %}">{{ info.tenant.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+{% endif %}
+    <a href="{% url 'property_list' %}" class="btn btn-secondary mt-3">Back to Property List</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+<!-- property_management/templates/tenant_profile.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2 class="mt-4 mb-4">{{ tenant.name }} Profile</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <p><strong>Address:</strong> {{ tenant.address }}</p>
+        <p><strong>Document Proofs:</strong> {{ tenant.document_proofs }}</p>
+
+        <h3>Rental Information</h3>
+        <ul class="list-group">
+          {% for info in rental_info %}
+            <li class="list-group-item">{{ info.unit.unit_type }} - Agreement End Date: {{ info.agreement_end_date }}, Monthly Rent Date: {{ info.monthly_rent_date }}</li>
+          {% endfor %}
+        </ul>
+
+        <a href="{% url 'tenant_list' %}" class="btn btn-secondary mt-3">Go to Tenant List</a>
+
+        <!-- Add Edit Profile Button -->
+        <a href="{% url 'edit_tenant_profile' tenant_id=tenant.id %}" class="btn btn-primary mt-3">Edit Profile</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

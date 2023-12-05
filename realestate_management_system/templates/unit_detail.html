@@ -1,0 +1,35 @@
+<!-- property_management/templates/unit_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}{{ property.name }} - Unit Details{% endblock %}
+
+{% block content %}
+  <h2 class="mt-4"><center>{{ property.name }} - {{ unit.unit_type }} Details</center></h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">{{ property.name }} - {{ unit.unit_type }}</h3>
+            <p class="card-text"><strong>Type:</strong> {{ unit.unit_type }}</p>
+            <p class="card-text"><strong>Rent Cost:</strong> {{ unit.rent_cost }}</p>
+            <p class="card-text"><strong>Property:</strong> {{ unit.property.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="mt-4 mb-3">Tenants</h3>
+    <ul class="list-group">
+      {% for info in rental_info %}
+        <li class="list-group-item">
+          <a href="{% url 'tenant_profile' info.tenant.id %}">{{ info.tenant.name }}</a>
+          - Agreement End Date: {{ info.agreement_end_date }}, Monthly Rent Date: {{ info.monthly_rent_date }}
+        </li>
+      {% endfor %}
+    </ul>
+
+    <a href="{% url 'property_detail' property.id %}" class="btn btn-secondary mt-3">Back to Property Details</a>
+  </div>
+{% endblock %}

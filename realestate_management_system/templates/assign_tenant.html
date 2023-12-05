@@ -1,0 +1,21 @@
+<!-- assign_tenant.html -->
+{% extends 'base.html' %}
+{% block title %}Assign Tenant for {{ unit.unit_type }} - {{ property.name }}{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated and user.is_staff %}
+<h2 class="mt-4 mb-4"><center>Assign Tenant for {{ unit.unit_type }} - {{ property.name }}</center></h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Assign Tenant</button>
+          </form>
+          <a href="{% url 'unit_detail' property.id unit.id %}" class="btn btn-secondary mt-3">Back to Unit Details</a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

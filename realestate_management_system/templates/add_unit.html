@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Unit Information{% endblock %}
+
+{% block content %}
+ {% if user.is_authenticated and user.is_staff %}
+<h2 class="mt-4 mb-4"><center>Unit Information for {{ property.name }}</center></h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+          <a href="{% url 'property_detail' property.id %}">Back to Property</a>
+
+      </div>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
+
